@@ -9,13 +9,11 @@ from whoosh.index import open_dir
 
 ## Define search method
 
-def search_rulebook(query=""):
-    ix = open_dir("indexdir")
+def search_rulebook(query_text=""):
     with ix.searcher() as searcher:
-        query = QueryParser("content", ix.schema).parse(query)
+        query = QueryParser("content", ix.schema).parse(query_text)
         results = searcher.search(query)
-        return results[0]
-
+    return results
 
 
 
@@ -29,14 +27,8 @@ text_splitter = RecursiveCharacterTextSplitter(
         is_separator_regex=False,
 )
 
-
-
-
-
 ## Index Content
 
-
-#schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content = TEXT)
 schema = Schema(id_=ID(stored=True), content = TEXT(stored=True))
 
 # create index if it does not exist
@@ -58,11 +50,3 @@ if not os.path.exists("indexdir"):
 else:
     # Open already created index
     ix = open_dir("indexdir")
-
-
-#with ix.searcher() as searcher:
-#    query = QueryParser("content", ix.schema).parse("magic")
-#    results = searcher.search(query)
-#    print(results[0])
-
-
