@@ -12,7 +12,7 @@ from whoosh.index import open_dir
 def search_rulebook(query_text=""):
     with ix.searcher() as searcher:
         query = QueryParser("content", ix.schema).parse(query_text)
-        results = searcher.search(query)
+        results = [i.fields() for i in searcher.search(query)]
     return results
 
 
