@@ -1,10 +1,16 @@
 import whoosh
 import os.path
+import yaml
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from whoosh.index import create_in
 from whoosh.fields import * # TODO: Get rid of this for the love of god and all attendant bodhisattvas
 from whoosh.qparser import QueryParser
 from whoosh.index import open_dir
+
+## Get Config
+
+with open("config/config.yml") as cf:
+    config = yaml.safe_load(cf)
 
 
 ## Define search method
@@ -34,7 +40,7 @@ schema = Schema(id_=ID(stored=True), content = TEXT(stored=True))
 # create index if it does not exist
 if not os.path.exists("indexdir"):
     # Load data
-    with open("../../cairn-markdown.md") as file:
+    with open("../../"+config['rulebook']) as file:
         rulebook = file.read()
     # Chunk
 
