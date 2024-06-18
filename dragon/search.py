@@ -1,14 +1,11 @@
-import os.path
-import yaml
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from whoosh.index import create_in
-from whoosh.fields import TEXT, ID, Schema
-from whoosh.qparser import QueryParser
-from whoosh.index import open_dir
+from pathlib import Path
 
-## Get Config
-with open("config/config.yml") as cf:
-    config = yaml.safe_load(cf)
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from whoosh.fields import ID, TEXT, Schema
+from whoosh.index import create_in, open_dir
+from whoosh.qparser import QueryParser
+
+from config import config
 
 
 ## Define search method
@@ -36,15 +33,15 @@ text_splitter = RecursiveCharacterTextSplitter(
 schema = Schema(id_=ID(stored=True), content=TEXT(stored=True))
 
 # create index if it does not exist
-if not os.path.exists("indexdir"):
+if not Path(config["index_directory"]).exists():
     # Load data
-    with open(config["rulebook_path"]) as file:
+    with Path(config["index_directory"]).open() as file:
         rulebook = file.read()
     # Chunk
 
     chunks = text_splitter.split_text(rulebook)
 
-    os.mkdir("indexdir")
+    Path(config["index_directory"]).mkdir()
     ix = create_in("indexdir", schema)
     writer = ix.writer()
     # Add chunks to index

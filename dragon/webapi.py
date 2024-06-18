@@ -3,9 +3,10 @@ from fastapi import FastAPI
 from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
 import search
+from pathlib import Path
 
 ## Get Config
-with open("config/config.yml") as cf:
+with Path("config/config.yml").open() as cf:
     config = yaml.safe_load(cf)
 
 rpg_title = config["rpg_title"]
