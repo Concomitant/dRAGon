@@ -1,19 +1,18 @@
-import whoosh
 import os.path
 import yaml
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from whoosh.index import create_in
-from whoosh.fields import * # TODO: Get rid of this for the love of god and all attendant bodhisattvas
+from whoosh.fields import TEXT, ID, Schema
 from whoosh.qparser import QueryParser
 from whoosh.index import open_dir
 
 ## Get Config
-
 with open("config/config.yml") as cf:
     config = yaml.safe_load(cf)
 
 
 ## Define search method
+
 
 def search_rulebook(query_text=""):
     with ix.searcher() as searcher:
@@ -22,25 +21,24 @@ def search_rulebook(query_text=""):
     return results
 
 
-
 ## Initialize chunkers
 
 text_splitter = RecursiveCharacterTextSplitter(
-        # Chunk params
-        chunk_size=300,
-        chunk_overlap=50,
-        length_function=len, #We are counting characters, not tokens
-        is_separator_regex=False,
+    # Chunk params
+    chunk_size=300,
+    chunk_overlap=50,
+    length_function=len,  # We are counting characters, not tokens
+    is_separator_regex=False,
 )
 
 ## Index Content
 
-schema = Schema(id_=ID(stored=True), content = TEXT(stored=True))
+schema = Schema(id_=ID(stored=True), content=TEXT(stored=True))
 
 # create index if it does not exist
 if not os.path.exists("indexdir"):
     # Load data
-    with open("../../"+config['rulebook']) as file:
+    with open(config["rulebook_path"]) as file:
         rulebook = file.read()
     # Chunk
 
