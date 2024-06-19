@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
+from pydantic import BaseModel
 
 import search
 from config import config
+
+
+class Query(BaseModel):
+    text: str
+
 
 rpg_title = config["rpg_title"]
 rpg_author = config["rpg_author"]
@@ -27,8 +33,8 @@ rag_chain = rag_prompt | llm
 app = FastAPI()
 
 
-@app.get("/api/{question}")
-def read_item(question: str):
-    source = search.search_rulebook(question)
-    context = {"question": question, "source": source}
+@app.post("/api/query")
+async def read_item(query: Query):
+    source = search.search_rulebook(query.text)
+    context = {"question": query.text, "source": source}
     return {"answer": rag_chain.invoke(context)}
