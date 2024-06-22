@@ -1,0 +1,8 @@
+rulebook_path: "/home/dshank/projects/autodragon/content/cairn.md" 
+
+# The title of the rpg without "The" or "RPG"
+# e.g. if rpg_title: "Cairn" it will be used in the program as "The Cairn RPG"
+rpg_title: "Cairn"
+rpg_author: "Yochai Gal"
+
+index_directory: "/home/dshank/projects/autodragon/dRAGon/dragon/indexdir"
