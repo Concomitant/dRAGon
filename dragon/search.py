@@ -12,9 +12,14 @@ from config import config
 
 
 def search_rulebook(query_text=""):
+    print("Begin search")
     with ix.searcher() as searcher:
         query = QueryParser("content", ix.schema).parse(query_text)
         results = [i.fields() for i in searcher.search(query)]
+    # TODO: Remove
+    print('RESULTS:', results)
+    if results == []:
+        results = ['NO RESULTS FOUND']
     return results
 
 
@@ -35,7 +40,7 @@ schema = Schema(id_=ID(stored=True), content=TEXT(stored=True))
 # create index if it does not exist
 if not Path(config["index_directory"]).exists():
     # Load data
-    with Path(config["index_directory"]).open() as file:
+    with Path(config["rulebook_path"]).open() as file:
         rulebook = file.read()
     # Chunk
 
