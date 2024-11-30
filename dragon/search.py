@@ -4,6 +4,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from whoosh.fields import ID, TEXT, Schema
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
+from whoosh.qparser import OrGroup
 
 from config import config
 
@@ -14,7 +15,7 @@ from config import config
 def search_rulebook(query_text=""):
     print("Begin search")
     with ix.searcher() as searcher:
-        query = QueryParser("content", ix.schema).parse(query_text)
+        query = QueryParser("content", ix.schema, group=OrGroup).parse(query_text)
         results = [i.fields() for i in searcher.search(query)]
     # TODO: Remove
     print('RESULTS:', results)
