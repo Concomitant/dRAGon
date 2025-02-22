@@ -9,7 +9,7 @@ from whoosh.qparser import OrGroup
 from config import config
 
 
-## Define search method
+## Define search method 
 
 
 def search_rulebook(query_text=""):
