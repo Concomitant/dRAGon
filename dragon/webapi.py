@@ -19,17 +19,23 @@ llm = OpenAI(temperature=0.7)
 rag_prompt = PromptTemplate(
     input_variables=["question", "source"],
     template=(
-        f"Examine the following snippets from {rpg_title} RPG by {rpg_author}. Following the snippets will be a question about the content\n"
-        f"If the answer to the question is found in the text answer accordingly. Otherwise reply that the answer is not found "
-        f"in the provided text, and suggest a modified version of the question that might yield better results when provided "
-        f"to a search engine."
-        f"\n"
-        f"{{source}}\n"
-        f"{{question}}\n"
-        f"\n"
-        f"Remember to  provide answers that are found in the provided snippet from {rpg_title}. If the content concerns a different "
-        f"subject than the question, answer in the negative and suggest an alternative query to answer the user's question."
-        f"Reply below:\n\n"
+        f"""Examine the following snippets from {rpg_title} RPG. Following the snippets will be a question about the content\n
+        If the answer to the question is found in the text answer accordingly. Otherwise reply that the answer is not found 
+        in the provided text, and suggest a modified version of the question that might yield better results when provided 
+        to a search engine.
+        \n
+        {{source}}\n
+        {{question}}\n
+        \n
+        Remember to  provide answers that are found in the provided snippet from {rpg_title}. If the content concerns a different 
+        subject than the question, answer in the negative and suggest an alternative query to answer the user's question.
+        
+        Examine the above snippets from {rpg_title} RPG. Following the snippets will be a question about the content\n
+        If the answer to the question is found in the text answer accordingly. Otherwise reply that the answer is not found 
+        in the provided text, and suggest a modified version of the question that might yield better results when provided 
+        to a search engine.
+
+        Reply below:\n\n"""
     ),
 )
 
