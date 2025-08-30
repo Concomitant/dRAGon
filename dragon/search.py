@@ -6,7 +6,7 @@ from whoosh.index import create_in, open_dir
 from whoosh.qparser import QueryParser
 from whoosh.qparser import OrGroup
 
-from config import config
+from .config import config
 
 
 ## Define search method 
