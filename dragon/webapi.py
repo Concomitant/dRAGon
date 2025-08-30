@@ -3,8 +3,8 @@ from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
 from pydantic import BaseModel
 
-import search
-from config import config
+from . import search
+from .config import config
 
 
 class Query(BaseModel):
