@@ -10,6 +10,16 @@ approaches, but dRAGon will reduce the cost of determining how a GM would rule i
 
 Of course, it is stll up to the GM how they will rule in such a case.
 
+## Running
+
+Launch the web API by running the package with Python:
+
+```
+python -m dragon
+```
+
+This starts a Uvicorn server on http://0.0.0.0:8000.
+
 ## Critical Features
 
 - dRAGon will answer generic questions about rules. e.g. "What are the rules fighting in difficult terrain" or "What story phase
